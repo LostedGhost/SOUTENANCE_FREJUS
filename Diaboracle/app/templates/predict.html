@@ -132,7 +132,17 @@ Prédiction d'un passant
 <div class=" col-6">
     <img src="{%static 'assets/img/illustr.png' %}" alt="" v-if="!is_predict">
     <div v-if="is_predict">
-      <div class="answerPredict" style="min-height:300px"></div>
+      <div id="answerPredict" style="min-height:300px"></div>
+      <div class="div-center">
+        <div class="row col-10 div-center">
+          <button class="btn btn-dark col-6">Recommandations à suivre</button>
+          <button class="btn btn-white col-4">Inscrivez vous</button>
+        </div>
+      </div>
+      <div class="div-center mt-3">
+        <p class="text-center text-body-emphasis fs-9">Accédez aux recommandations pour bénéficier de conseils, astuces et remèdes.
+        <br> Inscrivez vous pour suivre votre évolution.</p>
+      </div>
     </div>
 </div>
 </div>

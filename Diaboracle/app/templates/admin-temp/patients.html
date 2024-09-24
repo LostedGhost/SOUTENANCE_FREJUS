@@ -1,0 +1,92 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Patients
+{%endblock%}
+{%block content %}
+
+<div>
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+        <div class="pb-5">
+            <div class="row g-4">
+                <div class="col-12 col-xxl-6">
+                    <div class="row g-3 div-center">
+                        <div class="col-6 col-xxl-6">
+                            <div class="">
+                                <div class="">
+                                    <div class="row g-3">
+                                        <h2 class="text-center">
+                                            Mes patients
+                                            <a href="/add_patient"><button class="btn btn-primary mx-5"><span class="uil uil-plus"></span> Ajout</button></a>
+                                        </h2>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3 col-12">
+                            <div class="col-12">
+                              <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-2">
+                                <div id="projectSummary" data-list='{"valueNames":["nom","prenom", "date_naissance", "sexe", "telephone"],"page":10,"pagination":true}'>
+                                  <div class="row align-items-end justify-content-between pb-4 g-3">
+                                  </div>
+                                  <div class="table-responsive ms-n1 ps-1 scrollbar">
+                                    <table class="table fs-9 mb-0 border-top border-translucent">
+                                      <thead>
+                                        <tr>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="nom" style="width:25%;">Nom</th>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="prenom" style="width:15%;">Prénom</th>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="date_naissance" style="width:15%;">Date de naissance</th>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="sexe" style="width:15%;">Sexe</th>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="telephone" style="width:15%;">Téléphone</th>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" style="width:15%;"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody class="list" id="project-summary-table-body">
+                                        {%if nb_donnees == 0%}
+                                        <tr class="alert alert-subtle-danger" role="alert"><td colspan="6" class="text-center">Aucune donnée disponible</td></tr>
+                                        {%else%}
+                                        {%for data in patients%}
+                                        <tr class="position-static">
+                                            <td class="align-middle time white-space-nowrap ps-0 nom">{{data.nom}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 prenom">{{data.prenom}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 date_naissance">{{data.date_naissance}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 sexe">{%if data.sexe %}Masculin{%else%}Féminin{%endif%}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 telephone">{{data.telephone}}</td>
+                                            <td class="align-middle white-space-nowrap text-end pe-0">
+                                                <div class="btn-reveal-trigger position-static"><button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs-10"></span></button>
+                                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                                        <a class="dropdown-item" href="/dash_patient/{{data.code}}">Statistiques</a>
+                                                        <a class="dropdown-item" href="/constantes_patient/{{data.code}}">Constantes</a>
+                                                        <a class="dropdown-item" href="/predictions_patient/{{data.code}}">Prédictions</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item text-danger" href="/delete_patient/{{data.code}}">Suppression</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                          </tr>
+                                          {%endfor%}
+                                          {%endif%}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+                                    <div class="col-auto d-flex">
+                                      <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info"></p><a class="fw-semibold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semibold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                                    </div>
+                                    <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+                                      <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

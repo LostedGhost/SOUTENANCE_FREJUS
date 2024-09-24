@@ -4,4 +4,114 @@
 Accueil
 {%endblock%}
 {%block content %}
+<div id="dashboard" v-cloak>
+  {%if not user.has_save_data_today%}
+  <div class="alert alert-outline-warning d-flex align-items-center" role="alert">
+    <span class="fas fa-info-circle text-warning fs-5 me-3"></span>
+    <p class="mb-0 flex-1">Vous n'avez pas enregistré vos constantes aujourd'hui. Veuillez bien le faire.</p>
+  </div>
+  {%endif%}
+{%if not user.has_data %}
+<div class="alert alert-outline-warning d-flex align-items-center" role="alert">
+    <span class="fas fa-info-circle text-warning fs-5 me-3"></span>
+    <p class="mb-0 flex-1">Vous n'avez pas enregistré vos constantes. Veuillez bien le faire.</p>
+</div>
+{%else%}
+<div class="row mb-3 gy-6">
+    <div class="col-12 col-xxl-2">
+        <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center"><span class="fs-4 lh-1 uil uil-chart-line text-primary-dark"></span>
+                  <div class="ms-2">
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 me-2">{{user.nb_resultats}}</h2><span class="fs-7 fw-semibold text-body">Prédictions</span>
+                    </div>
+                    <p class="text-body-secondary fs-9 mb-0">Déjà effectuées</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center"><span class="fs-4 lh-1 uil uil-save text-primary-dark"></span>
+                  <div class="ms-2">
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 me-2">{{user.nb_donnees}}</h2><span class="fs-7 fw-semibold text-body">Enregistrements</span>
+                    </div>
+                    <p class="text-body-secondary fs-9 mb-0">Effectuées</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center"><span class="fs-4 lh-1 uil uil-weight text-primary-dark"></span>
+                  <div class="ms-2">
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 me-2">{{user.poids_actuel}}</h2><span class="fs-7 fw-semibold text-body">Poids actuel</span>
+                    </div>
+                    <p class="text-body-secondary fs-9 mb-0">Donnée actuelle (en Kg)</p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center"><span class="fs-4 lh-1 uil uil-medkit text-primary-dark"></span>
+                  <div class="ms-2">
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 me-2">{{user.glycemie_actuelle}}</h2><span class="fs-7 fw-semibold text-body">Glycémie</span>
+                    </div>
+                    <p class="text-body-secondary fs-9 mb-0">Donnée actuelle</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endif%}
+<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+    <div class="pb-5">
+        <div class="row g-4">
+            <div class="col-12 col-xxl-6">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                          <div class="col-auto">
+                            <h6 class="text-body-tertiary mb-2">
+                                <select v-model="constante" class="form-select form-select-sm" aria-label=".form-select-sm example" v-on:change="createLineChart()">
+                                    <option value="Poids">Poids</option>
+                                    <option value="Taille">Taille</option>
+                                    <option value="Glycémie">Glycémie</option>
+                                    {%if not user.sexe %}
+                                    <option value="Etat de grossesse">Etat de grossesse</option>
+                                    {%endif%}
+                                </select>
+                            </h6>
+                        </div>
+                          
+                        <h4>
+                            <div class="col-auto">
+                                <button class="btn btn-sm btn-phoenix-secondary bg-body-emphasis bg-body-hover action-btn" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h" data-fa-transform="shrink-2"></span></button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                <li v-on:click="option = 0" class="cursor-pointer"><a class="dropdown-item" >Dernière semaine</a></li>
+                                <li v-on:click="option = 1" class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalMois"><a class="dropdown-item">Par mois</a></li>
+                                <li v-on:click="option = 2" class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalPeriod"><a class="dropdown-item">Par période</a></li>
+                                </ul>
+                            </div>
+                        </h4>
+                        </div>
+                        <div class="d-flex justify-content-center px-4 py-6">
+                            <canvas id="graphe" style="min-height:400px"></canvas>
+                        </div>
+                        <div class="mt-2">
+                          <div class="d-flex align-items-center">
+                            <h6 class="text-body fw-semibold flex-1 mb-0"></h6>
+                            <h6 class="text-body fw-semibold mb-0">Pour plusieurs enregistrements en un jour, seul le dernier sera considéré comme enregistrement du jour.</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
 {%endblock%}

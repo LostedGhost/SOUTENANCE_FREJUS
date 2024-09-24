@@ -1,0 +1,17 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Constantes patient
+{%endblock%}
+{%block content %}
+<a href="/patients"><button class="btn btn-primary m-5"><span class="uil uil-arrow-left"></span> Retour</button></a>
+<div class="list-group">
+    <a class="list-group-item list-group-item-action text-center" href="/poids_patient/{{patient.code}}">Poids</a>
+    <a class="list-group-item list-group-item-action text-center" href="/taille_patient/{{patient.code}}">Taille</a>
+    <a class="list-group-item list-group-item-action text-center" href="/glycemie_patient/{{patient.code}}">Glycémie</a>
+    {%if not patient.sexe%}
+    <a class="list-group-item list-group-item-action text-center" href="/gestation_patient/{{patient.code}}">Gestation</a>
+    {%endif%}
+  </div>
+
+{%endblock%}

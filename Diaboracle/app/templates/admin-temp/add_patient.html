@@ -1,0 +1,71 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Ajout de patient
+{%endblock%}
+{%block content %}
+<div>
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+        <div class="pb-5">
+            <div class="row g-4">
+                <div class="col-12 col-xxl-6">
+                    <div class="row g-3 div-center">
+                        <div class="col-6 col-xxl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <h2>Ajout de patient</h2>
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <form method="post">
+                                                    {%csrf_token%}
+                                                    <div class="div-center row">
+                                                        <div class="col-10">
+                                                            <label class="form-label">Nom</label>
+                                                            <input type="text" class="form-control" placeholder="Nom" name="nom">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <label class="form-label">Prénom</label>
+                                                            <input type="text" class="form-control" placeholder="Prénom" name="prenom">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <label class="form-label">Date de naissance</label>
+                                                            <input type="date" class="form-control" name="date_naissance" max="{{max_day}}">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <label class="form-label">Téléphone</label>
+                                                            <input type="number" class="form-control" placeholder="61XXXXXX" name="telephone">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <label class="form-label">Sexe</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sexe" value="1" checked>
+                                                                <label class="form-check-label" >Masculin</label>
+                                                              </div>
+                                                              <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="sexe" value="0">
+                                                                <label class="form-check-label" >Féminin</label>
+                                                              </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="div-center mt-4">
+                                                    <button class="btn btn-sm btn-phoenix-secondary bg-body-emphasis bg-body-hover action-btn" type="submit">
+                                                        <span class="fas fa-plus me-2"></span>
+                                                        Enregistrer
+                                                    </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

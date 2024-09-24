@@ -1,0 +1,117 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Profil utilisateur
+{%endblock%}
+{%block content %}
+<div class="mb-9">
+    <div class="row g-6">
+      <div class="col-12 col-xl-4">
+        <div class="card mb-5">
+          <div class="card-header hover-actions-trigger position-relative mb-6" style="min-height: 130px; ">
+            <div class="bg-holder rounded-top" style="background-image: linear-gradient(0deg, #000000 -3%, rgba(0, 0, 0, 0) 83%), url({%static 'assets/img/generic/59.png'%})">
+            </div><label class="avatar avatar-4xl status-online feed-avatar-profile" for="upload-settings-porfile-picture"><img class="rounded-circle img-thumbnail shadow-sm border-0" src="
+                {%if user.image %}
+                {{user.image.url}}
+                {%else%}
+                {%static 'assets/img/profile.png' %}
+                {%endif%}
+                " width="200" alt="" /></label>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex flex-wrap mb-2 align-items-center">
+                  <h3 class="me-2">{{user.nom_prenom}}</h3>
+                </div>
+                {%if user.specialite%}
+                <div class="d-flex d-xl-block d-xxl-flex align-items-center">
+                  <div class="d-flex mb-xl-2 mb-xxl-0"><span class="fa-solid fa-user-group fs-10 me-2 me-lg-1 me-xl-2"></span>
+                    <h6 class="d-inline-block mb-0">{{user.specialite}}</h6>
+                  </div>
+                </div>
+                {%endif%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-xl-8">
+        <div class="mb-4">
+          <div class="mb-6">
+            <h4 class="mb-4">Information personnelle</h4>
+            <form method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="row g-3 mb-6">
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                    <div class="form-floating"><input class="form-control form-icon-input" name="nom" type="text" placeholder="Nom" value="{{user.nom}}"/><label class="text-body-tertiary form-icon-label" for="firstName">NOM</label></div><span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                    <div class="form-floating"><input class="form-control form-icon-input" name="prenoms" type="text" placeholder="Prénoms" value="{{user.prenom}}"/><label class="text-body-tertiary form-icon-label" >PRENOMS</label></div><span class="fa-solid fa-user text-body fs-9 form-icon"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                    <div class=""><label class="text-body-tertiary form-icon-label" >Date de naissance</label></div><input class="form-control form-icon-input" name="date_naissance" type="date" placeholder="JJ/MM/AAAA" value="{{user.date_naissance_rep}}"/>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                    <div class=""><label class="text-body-tertiary form-icon-label" >Email</label></div><input class="form-control form-icon-input" name="email" type="email" placeholder="example@gmail.com" value="{{user.email}}" readonly/>
+                    </div>
+                </div>
+                {%if user.specialite%}
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                    <div class=""><label class="text-body-tertiary form-icon-label" >Spécialité</label></div><input class="form-control form-icon-input" name="specialite" type="text" placeholder="Spécialité" value="{{user.specialite}}" readonly/>
+                    </div>
+                </div>
+                {%endif%}
+                <div class="col-12 col-sm-6">
+                    <div class="form-icon-container">
+                        <div class=""><label class="text-body-tertiary form-icon-label" >Photo de profil</label></div><input class="form-control form-icon-input" type="file" name="image" placeholder="Photo de profil"/>
+                    </div>
+                </div>
+                </div>
+                <div class="text-end mb-6">
+                    <div>
+                      <a href="/dash"><button class="btn btn-phoenix-secondary me-2" type="button">Annuler</button></a>
+                        <button class="btn btn-phoenix-primary" type="submit">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+            <form method="post">
+                {%csrf_token%}
+                <div class="row gx-3 mb-6 gy-6 gy-sm-3">
+                    <div class="col-12 col-sm-6">
+                    
+                    </div>
+                    <div class="col-12 col-sm-6">
+                    <h4 class="mb-4">Changer le mot de passe</h4>
+                    <div class="form-icon-container mb-3">
+                        <div class="form-floating"><input class="form-control form-icon-input" name="oldpassword" type="password" placeholder="Ancien mot de passe" required/><label class="text-body-tertiary form-icon-label" for="oldPassword">Ancien mot de passe</label></div><span class="fa-solid fa-lock text-body fs-9 form-icon"></span>
+                    </div>
+                    <div class="form-icon-container mb-3">
+                        <div class="form-floating"><input class="form-control form-icon-input" name="password" type="password" placeholder="Nouveau mot de passe" required/><label class="text-body-tertiary form-icon-label">Nouveau mot de passe</label></div><span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+                    </div>
+                    <div class="form-icon-container">
+                        <div class="form-floating"><input class="form-control form-icon-input" name="repassword" type="password" placeholder="Confirmer mot de passe" required/><label class="text-body-tertiary form-icon-label" for="newPassword2">Confirmer mot de passe</label></div><span class="fa-solid fa-key text-body fs-9 form-icon"></span>
+                    </div>
+                    </div>
+                </div>
+                <div class="text-end mb-6">
+                    <div>
+                        <a href="/dash"><button class="btn btn-phoenix-secondary me-2" type="button">Abandonner</button></a>
+                        <button class="btn btn-phoenix-primary" type="submit">Modifier</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endblock%}

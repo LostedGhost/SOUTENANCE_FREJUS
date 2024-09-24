@@ -1,0 +1,93 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Taille
+{%endblock%}
+{%block content %}
+<div id="taille-add" v-cloak>
+    {%if patient%}
+    <a href="/constantes_patient/{{patient.code}}"><button class="btn btn-primary m-5"><span class="uil uil-arrow-left"></span> Retour</button></a>
+    {%endif%}
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+        <div class="pb-5">
+            <div class="row g-4">
+                <div class="col-12 col-xxl-6">
+                    <div class="row g-3 div-center">
+                        <div class="col-6 col-xxl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <h2>Enregistrement de constante</h2>
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <form method="post">
+                                                    {%csrf_token%}
+                                                    <label class="form-label">Taille (en Cm) </label>
+                                                    <div class="input-group input-group-sm mb-3">
+                                                    <input type="number" class="form-control" placeholder="Taille" v-model="taille" name=taille>
+                                                    <button class="btn btn-sm btn-phoenix-secondary bg-body-emphasis bg-body-hover action-btn" type="submit">
+                                                        <span class="fas fa-plus me-2"></span>
+                                                        Enregistrer
+                                                    </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                              <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-6 border-top">
+                                <div id="projectSummary" data-list='{"valueNames":["date","valeur"],"page":10,"pagination":true}'>
+                                  <div class="row align-items-end justify-content-between pb-4 g-3">
+                                    <div class="col-auto">
+                                      <h3>Taille</h3>
+                                      <p class="text-body-tertiary lh-sm mb-0">Enregistrement par jours</p>
+                                    </div>
+                                  </div>
+                                  <div class="table-responsive ms-n1 ps-1 scrollbar">
+                                    <table class="table fs-9 mb-0 border-top border-translucent">
+                                      <thead>
+                                        <tr>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="date" style="width:30%;">Date de prise</th>
+                                          <th class="sort align-middle ps-3" scope="col" data-sort="valeur" style="width:10%;">Valeur (en Cm)</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody class="list" id="project-summary-table-body">
+                                        {%if nb_donnees == 0%}
+                                        <tr class="alert alert-subtle-danger" role="alert"><td colspan="2" class="text-center">Aucune donnée disponible</td></tr>
+                                        {%else%}
+                                        {%for data in donnees%}
+                                        <tr class="position-static">
+                                            <td class="align-middle time white-space-nowrap ps-0 date">{{data.date}}</td>
+                                            <td class="align-middle white-space-nowrap valeur ps-3">
+                                              <p class="mb-0 fs-9 text-body">{{data.valeur}}</p>
+                                            </td>
+                                          </tr>
+                                          {%endfor%}
+                                          {%endif%}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+                                    <div class="col-auto d-flex">
+                                      <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info"></p><a class="fw-semibold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semibold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                                    </div>
+                                    <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+                                      <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

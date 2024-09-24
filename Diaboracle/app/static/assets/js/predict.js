@@ -1,13 +1,79 @@
-function drawAnswer(answer, message){
+function drawAnswer(risque) {
     (function (factory) {
-        typeof define === 'function' && define.amd ? define(factory) :
-        factory();
-      })((function () { 'use strict';
-    const gaugeGradeChartInit=()=>{const{getColor:e,getData:t}=window.phoenix.utils,a=document.querySelector(".answerPredict");if(a){const o=t(a,"echarts"),r=window.echarts.init(a);echartSetOption(r,o,(()=>({series:[{radius:"100%",type:"gauge",center:["50%","70%"],startAngle:180,endAngle:0,min:0,max:1,splitNumber:8,axisLine:{lineStyle:{width:6,color:[[.25,e("danger")],[.5,e("warning")],[.75,e("info")],[1,e("success")]]}},pointer:{icon:"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z",length:"12%",width:20,offsetCenter:[0,"-60%"],itemStyle:{color:"auto"}},axisTick:{length:12,lineStyle:{color:"auto",width:2}},splitLine:{length:20,lineStyle:{color:"auto",width:5}},axisLabel:{color:e("quaternary-color"),distance:-60,formatter:e=>.875===e?"Excellent":.625===e?"Good":.375===e?"Well":.125===e?"Bad":""},title:{offsetCenter:[0,"-20%"],color:e("tertiary-color")},detail:{offsetCenter:[0,"0%"],valueAnimation:!0,formatter:e=>Math.round(100*e),color:"auto"},data:[{value:answer,name:"Risque"}]}]})));}};
-    const{docReady:docReady}=window.phoenix.utils;
-    docReady(gaugeGradeChartInit);
-}));
-}
+      typeof define === 'function' && define.amd ? define(factory) :
+      factory();
+    })(function () { 
+      'use strict';
+      const gaugeGradeChartInit = () => {
+        const { getColor, getData } = window.phoenix.utils;
+        const a = document.querySelector("#answerPredict");
+        a.innerHTML = "";
+        
+        if (a) {
+          const o = getData(a, "echarts");
+          const r = window.echarts.init(a);
+          
+          // Configure et dessine le graphique
+          r.setOption({
+            series: [{
+              radius: "100%",
+              type: "gauge",
+              center: ["50%", "70%"],
+              startAngle: 180,
+              endAngle: 0,
+              min: 0,
+              max: 1,
+              splitNumber: 10,
+              axisLine: {
+                lineStyle: {
+                  width: 6,
+                  color: [
+                    [.33, getColor("success")],
+                    [.66, getColor("warning")],
+                    [1, getColor("danger")]
+                  ]
+                }
+              },
+              pointer: {
+                icon: "path://M12.8,0.7l12,40.1H0.7L12.8,0.7z",
+                length: "12%",
+                width: 20,
+                offsetCenter: [0, "-60%"],
+                itemStyle: { color: "auto" }
+              },
+              axisTick: {
+                length: 12,
+                lineStyle: { color: "auto", width: 2 }
+              },
+              splitLine: {
+                length: 20,
+                lineStyle: { color: "auto", width: 5 }
+              },
+              axisLabel: {
+                color: getColor("quaternary-color"),
+                distance: -60
+              },
+              title: {
+                offsetCenter: [0, "-20%"],
+                color: getColor("tertiary-color")
+              },
+              detail: {
+                offsetCenter: [0, "0%"],
+                valueAnimation: true,
+                formatter: e => Math.round(e * 100),
+                color: "auto"
+              },
+              data: [{ value: risque, name: "Risque" }]
+            }]
+          });
+        }
+      };
+  
+      // Exécuter immédiatement pour dessiner le graphe
+      gaugeGradeChartInit();
+    });
+  }
+  
 app = Vue.createApp({
     delimiters: ['[[', ']]'],
     data() {

@@ -17,7 +17,13 @@
         
         <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
             <div class="avatar avatar-l ">
-              <img class="rounded-circle " src="{%static 'assets/img/team/40x40/57.webp' %}" alt="" />
+              <img class="rounded-circle " src="
+              {%if user.image %}
+              {{user.image.url}}
+              {%else%}
+              {%static 'assets/img/profile.png' %}
+              {%endif%}
+              " alt="" />
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border" aria-labelledby="navbarDropdownUser">
@@ -25,19 +31,25 @@
               <div class="card-body p-0">
                 <div class="text-center pt-4 pb-3">
                   <div class="avatar avatar-xl ">
-                    <img class="rounded-circle " src="{%static 'assets/img/team/72x72/57.webp' %}" alt="" />
+                    <img class="rounded-circle " src="
+                    {%if user.image %}
+                    {{user.image.url}}
+                    {%else%}
+                    {%static 'assets/img/profile.png' %}
+                    {%endif%}
+                    " alt="" />
                   </div>
-                  <h6 class="mt-2 text-body-emphasis">Fréjus LAWSON</h6>
+                  <h6 class="mt-2 text-body-emphasis">{{user.nom_prenom}}</h6>
                 </div>
               </div>
               <div class="overflow-auto scrollbar" style="height: auto;">
                 <ul class="nav d-flex flex-column mb-2 pb-1">
-                  <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <span class="me-2 text-body align-bottom" data-feather="user"></span><span>Profil</span></a></li>
+                  <li class="nav-item"><a class="nav-link px-3 d-block" href="/profil"> <span class="me-2 text-body align-bottom" data-feather="user"></span><span>Profil</span></a></li>
                   <li class="nav-item"><a class="nav-link px-3 d-block" href="/dash"><span class="me-2 text-body align-bottom" data-feather="pie-chart"></span>Accueil</a></li>
                 </ul>
               </div>
               <div class="card-footer p-0 border-top border-translucent">
-                <div class="px-3 mt-2"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!"> <span class="me-2" data-feather="log-out"> </span>Déconnexion</a></div>
+                <div class="px-3 mt-2"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="/logout"> <span class="me-2" data-feather="log-out"> </span>Déconnexion</a></div>
                 <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a class="text-body-quaternary me-1" href="#!">Privacy policy</a>&bull;<a class="text-body-quaternary mx-1" href="#!">Terms</a>&bull;<a class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
               </div>
             </div>

@@ -10,6 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -28,6 +29,20 @@
       {%endblock%}
       
       <div class="content">
+        {%if success%}
+        <div class="alert alert-outline-success d-flex align-items-center" role="alert">
+          <span class="fas fa-check-circle text-success fs-5 me-3"></span>
+          <p class="mb-0 flex-1">{{success}}</p>
+          <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
+        {%if error%}
+        <div class="alert alert-outline-danger d-flex align-items-center" role="alert">
+          <span class="fas fa-times-circle text-danger fs-5 me-3"></span>
+          <p class="mb-0 flex-1">{{error}}</p>
+          <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
         {%block content %}
         <div class="pb-5">
           <div class="row g-4">
@@ -1019,6 +1034,39 @@
           </div>
         </div>
         {%endblock%}
+        <div class="modal fade" id="modalPeriod" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Sélection de période</h5><button class="btn btn-close p-1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-body-tertiary lh-lg mb-0">
+                  <div class="col-12 row">
+                    <input type="date" class="form-control col-6" id="start" name="start" max="{{max_day}}" v-model="start" v-on:change="setMinEnd()">
+                    <input type="date" class="form-control col-6" id="end" name="end" max="{{max_day}}" v-model="end">
+                  </div>
+                </p>
+              </div>
+              <div class="modal-footer"><button class="btn btn-primary" type="button" v-on:click="validatePeriod()">Okay</button><button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal" id="dismissPeriodModal">Cancel</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="modalMois" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Sélection de mois</h5><button class="btn btn-close p-1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-body-tertiary lh-lg mb-0">
+                  <input type="month" class="form-control" id="month" name="month" max="{{max_month}}" v-model="mois">
+                </p>
+              </div>
+              <div class="modal-footer"><button class="btn btn-primary" type="button" v-on:click="validateMonth()">Okay</button><button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal" id="dismissMonthModal">Cancel</button></div>
+            </div>
+          </div>
+        </div>
         <footer class="footer position-absolute">
           <div class="row g-0 justify-content-between align-items-center h-100">
             <div class="col-12 col-sm-auto text-center">

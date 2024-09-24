@@ -1,0 +1,51 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Inscription
+{%endblock%}
+{%block header %}
+{%endblock%}
+{%block content %}
+<div class="row h-100 g-0">
+    <div class="col-lg-5 position-relative d-none d-lg-block">
+      <div class="bg-holder" style="background-image:url({%static 'assets/img/bg/32.png'%});"></div>
+      <!--/.bg-holder-->
+    </div>
+    <div class="col-lg-7">
+      <div class="row flex-center h-100 g-0 px-4 px-sm-0" id="signin">
+        <div class="col col-sm-6 col-lg-7 col-xl-6"><a class="d-flex flex-center text-decoration-none mb-4" href="/">
+            <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="{%static 'assets/img/icons/logo.png'%}" alt="phoenix" width="58" /></div>
+          </a>
+          <div class="text-center mb-7">
+            <h3 class="text-body-highlight">Inscription</h3>
+            <p class="text-body-tertiary">Créez votre compte</p>
+          </div>
+          <form method="post">
+            <meta name="csrf-token" content="{{ csrf_token }}">
+            {%csrf_token%}
+            <div class="mb-3 text-start"><label class="form-label">Nom</label><input class="form-control" name="nom" type="text" placeholder="Nom" v-model="nom"/></div>
+            <div class="mb-3 text-start"><label class="form-label">Prénoms</label><input class="form-control" name="prenom" type="text" placeholder="Prénoms" v-model="prenoms"/></div>
+            <div class="mb-3 text-start"><label class="form-label">Date de naissance</label><input class="form-control" name="date_naissance" type="date" placeholder="XX-XX-XXXX" min="1900-01-01" max="{{today}}" v-model="date_naissance"/></div>
+            <div class="mb-3 text-start"><label class="form-label">Adresse email</label><input class="form-control" name="email" type="email" placeholder="name@example.com" v-model="email"/></div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" name="specialiste" type="checkbox" value="false" v-model="is_specialiste" v-on:click="is_specialiste = !is_specialiste"/>
+                <label class="form-check-label" for="flexSwitchCheckChecked">Spécialiste de la santé ?</label>
+            </div>
+            <div class="mb-3 text-start" v-if="is_specialiste"><label class="form-label">Spécialité</label><input class="form-control" name="speciality" type="text" placeholder="Spécialité" v-model="speciality"/></div>
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6"><label class="form-label" for="password">Mot de passe</label>
+                <div class="position-relative" data-password="data-password"><input class="form-control form-icon-input pe-6" name="password" type="password" placeholder="******" data-password-input="data-password-input" v-model="password"/><button class="btn px-3 py-0 h-100 position-absolute top-0 end-0 fs-7 text-body-tertiary" data-password-toggle="data-password-toggle" type="button"><span class="uil uil-eye show"></span><span class="uil uil-eye-slash hide"></span></button></div>
+              </div>
+              <div class="col-sm-6"><label class="form-label" for="confirmPassword">Confirmez le mot de passe</label>
+                <div class="position-relative" data-password="data-password"><input class="form-control form-icon-input pe-6" name="confirmPassword" type="password" placeholder="******" data-password-input="data-password-input" v-model="repassword"/><button class="btn px-3 py-0 h-100 position-absolute top-0 end-0 fs-7 text-body-tertiary" data-password-toggle="data-password-toggle" type="button"><span class="uil uil-eye show"></span><span class="uil uil-eye-slash hide"></span></button></div>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100 mb-3" v-on:click="signin()" type="button">S'inscrire</button>
+            <div class="text-center"><a class="fs-9 fw-bold" href="/login">Se connecter à un compte existant</a></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{%endblock%}

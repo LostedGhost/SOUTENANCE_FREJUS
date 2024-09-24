@@ -1,0 +1,95 @@
+{%extends 'admin-temp/base.html'%}
+{%load static%}
+{%block title %}
+Prédiction
+{%endblock%}
+{%block content %}
+
+<div class="div-center" id="predict" v-cloak>
+    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
+        <div class="pb-5">
+            <div class="row g-4">
+                <div class="col-12 col-xxl-6">
+                    <div class="row g-3 div-center">
+                        <div class="col-6 col-xxl-6">
+                            <div class="">
+                                <div class="">
+                                    <div class="row g-3">
+                                        <h2>Résulats des prédictions</h2>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3 col-12">
+                            <div class="col-12">
+                              <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-2">
+                                <div id="projectSummary" data-list='{"valueNames":["poids","taille", "glycemie", "gestation", "risque"],"page":10,"pagination":true}'>
+                                  <div class="row align-items-end justify-content-between pb-4 g-3">
+                                  </div>
+                                  <div class="table-responsive ms-n1 ps-1 scrollbar">
+                                    <table class="table fs-9 mb-0 border-top border-translucent">
+                                      <thead>
+                                        <tr>
+                                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="date" style="width:25%;">Date</th>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="poids" style="width:15%;">Poids</th>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="taille" style="width:15%;">Taille</th>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="glycemie" style="width:15%;">Glycémie</th>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="gestation" style="width:15%;">Enceinte ?</th>
+                                          <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="risque" style="width:15%;">Risque</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody class="list" id="project-summary-table-body">
+                                        {%if nb_donnees == 0%}
+                                        <tr class="alert alert-subtle-danger" role="alert"><td colspan="2" class="text-center">Aucune donnée disponible</td></tr>
+                                        {%else%}
+                                        {%for data in donnees%}
+                                        <tr class="position-static">
+                                            <td class="align-middle time white-space-nowrap ps-0 date">{{data.date_rep}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 poids">{{data.poids}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 taille">{{data.taille}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 glycemie">{{data.niveauInsuline}}</td>
+                                            <td class="align-middle time white-space-nowrap ps-0 gestation">
+                                                <p class="mb-0 text-body">
+                                                    {%if data.etat_de_grossesse == 1%}
+                                                    <span class="badge badge-phoenix-danger fs-9">Oui</span>
+                                                    {%else%}
+                                                    <span class="badge badge-phoenix-success fs-9">Non</span>
+                                                    {%endif%}
+                                                </p>
+                                            </td>
+                                            <td class="align-middle time white-space-nowrap ps-0 risque">
+                                                {%if data.answer.risque_text == "Fort"%}
+                                                <span class="badge badge-phoenix-danger fs-9">{{data.answer.risque}} %</span>
+                                                {%elif data.answer.risque_text == "Moyen"%}
+                                                <span class="badge badge-phoenix-warning fs-9">{{data.answer.risque}} %</span>
+                                                {%else%}
+                                                <span class="badge badge-phoenix-success fs-9">{{data.answer.risque}} %</span>
+                                                {%endif%}
+                                            </td>
+                                          </tr>
+                                          {%endfor%}
+                                          {%endif%}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
+                                    <div class="col-auto d-flex">
+                                      <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info"></p><a class="fw-semibold" href="#!" data-list-view="*">View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a class="fw-semibold d-none" href="#!" data-list-view="less">View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                                    </div>
+                                    <div class="col-auto d-flex"><button class="page-link" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+                                      <ul class="mb-0 pagination"></ul><button class="page-link pe-0" data-list-pagination="next"><span class="fas fa-chevron-right"></span></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
